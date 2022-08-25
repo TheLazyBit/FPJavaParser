@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'name.voided'
+version '1.0-SNAPSHOT'
+
+var requiredJavaVersion = JavaVersion.VERSION_17
+
+if(JavaVersion.current() != requiredJavaVersion) {
+    throw new GradleException("This project requires Java version '${requiredJavaVersion}', but it's running on '${JavaVersion.current()}'")
+}
+
+sourceCompatibility = requiredJavaVersion
+targetCompatibility = requiredJavaVersion
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
+}
+
+test {
+    jvmArgs += "--enable-preivew"
+    useJUnitPlatform()
+}
